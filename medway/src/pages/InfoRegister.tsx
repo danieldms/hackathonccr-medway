@@ -28,7 +28,7 @@ const InfoRegister = () => {
   const route = useRoute();
   let params: Props | undefined = route.params;
 
-  const [input, setInput] = useState<Dados>({name: '', gender: ''});
+  const [input, setInput] = useState<Dados>({ name: "", gender: "" });
   const [check, setCheck] = useState(false);
 
   const goNext = () => {
@@ -91,7 +91,7 @@ const InfoRegister = () => {
             onChangeText={handlerOnChangeInput}
           ></TextInput>
 
-          {input?.name != '' && (
+          {input?.name != "" && (
             <View
               style={{ height: 50, marginTop: -50, alignItems: "flex-end" }}
             >

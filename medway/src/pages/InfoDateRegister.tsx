@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Platform, Modal } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Platform,
+  Modal
+} from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import { TouchableOpacity, RectButton } from "react-native-gesture-handler";
 import Constants from "expo-constants";

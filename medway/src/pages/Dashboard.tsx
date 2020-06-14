@@ -5,7 +5,8 @@ import {
   Feather as IconFeather,
 } from "@expo/vector-icons";
 import Constants from "expo-constants";
-import { useRoute } from "@react-navigation/native";
+import { useRoute, NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { RectButton } from "react-native-gesture-handler";
 
 interface Props {
@@ -23,6 +24,8 @@ const Dashboard = () => {
   const route = useRoute();
   let params: Props | undefined = route.params;
 
+  const Tab = createBottomTabNavigator();
+
   const openWhatsapp = () => {
     let url =
       "whatsapp://send?text=Olá, gostaria de marcar uma consulta&phone=+551149331985";
@@ -35,8 +38,8 @@ const Dashboard = () => {
       });
   };
 
-  return (
-    <>
+  function Dashboard() {
+    return (
       <View style={styles.container}>
         <View style={styles.alertContainer}>
           <View
@@ -135,7 +138,68 @@ const Dashboard = () => {
           </RectButton>
         </View>
       </View>
-    </>
+    );
+  }
+
+  function NotYet() {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Not implemented yet!</Text>
+      </View>
+    );
+  }
+
+  return (
+    <Tab.Navigator
+      initialRouteName="Dashboard"
+      tabBarOptions={{
+        activeTintColor: "#e91e63",
+      }}
+    >
+      <Tab.Screen
+        name="Pefil"
+        component={NotYet}
+        options={{
+          tabBarLabel: "Perfil",
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="user" color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Dashboard"
+        component={Dashboard}
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="home" color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Historico"
+        component={NotYet}
+        options={{
+          tabBarLabel: "Histórico",
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="history" color={color} size={size} />
+          ),
+        }}
+      />
+
+      <Tab.Screen
+        name="Alert"
+        component={NotYet}
+        options={{
+          tabBarLabel: "Alertas",
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="bell" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
   );
 };
 
@@ -143,7 +207,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: Constants.statusBarHeight - 15,
-    paddingVertical: Constants.statusBarHeight - 20,
+    paddingTop: Constants.statusBarHeight + 20,
+    paddingBottom: 8,
     backgroundColor: "#F6F5F5",
   },
   alertContainer: {

@@ -1,7 +1,11 @@
 import React, { useState, useEffect, FormEvent } from "react";
-import { View, StyleSheet, Text, Picker } from "react-native";
+import { View, StyleSheet, Text, Picker, StatusBar } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
-import { TouchableOpacity, RectButton, TextInput } from "react-native-gesture-handler";
+import {
+  TouchableOpacity,
+  RectButton,
+  TextInput,
+} from "react-native-gesture-handler";
 import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/native";
 
@@ -35,6 +39,11 @@ const PhoneRegister = () => {
 
   return (
     <>
+      <StatusBar
+        translucent
+        barStyle="dark-content"
+        backgroundColor="transparent"
+      />
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => {
