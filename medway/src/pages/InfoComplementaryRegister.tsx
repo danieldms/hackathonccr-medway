@@ -30,7 +30,7 @@ const InfoComplementaryRegister = () => {
   const route = useRoute();
   let params: Props | undefined = route.params;
 
-  const [input, setInput] = useState<Dados>();
+  const [input, setInput] = useState<Dados>({ weight: "", height: "" });
   const [check, setCheck] = useState(false);
 
   const goNext = () => {
@@ -39,7 +39,7 @@ const InfoComplementaryRegister = () => {
       params.height = input?.height;
     }
 
-    navigation.navigate("InfoDateRegister");
+    navigation.navigate("InfoDateRegister", params);
   };
 
   useEffect(() => {
@@ -62,6 +62,7 @@ const InfoComplementaryRegister = () => {
             <Text style={styles.title}>Cadastro</Text>
             <Text style={styles.description}>Dados complementares</Text>
           </View>
+
           <View>
             <Text style={styles.title}>
               2/<Text style={{ fontSize: 24, fontWeight: "300" }}>3</Text>
@@ -69,34 +70,57 @@ const InfoComplementaryRegister = () => {
             <Text style={styles.description}>etapas</Text>
           </View>
         </View>
-        
-        <KeyboardAvoidingView>  
-        <View style={styles.fieldsContainer}>
-          <TextInput
-            placeholder="0.00 kg"
-            style={styles.input}
-            maxLength={5}
-            onChangeText={(name: string) => {
-              setInput({ ...input, weight: name });
-            }}
-            keyboardType="number-pad"
-          ></TextInput>
-          <TextInput
-            placeholder="190 cm"
-            style={styles.input}
-            maxLength={3}
-            onChangeText={(name: string) => {
-              setInput({ ...input, height: name });
-            }}
-            keyboardType="number-pad"
-          ></TextInput>
-        </View>
 
-        <View style={styles.footer}>
-          <RectButton style={styles.button} onPress={goNext} enabled={check}>
-            <Text style={styles.buttonText}>Avançar</Text>
-          </RectButton>
-        </View>
+        <KeyboardAvoidingView>
+          <View style={styles.fieldsContainer}>
+            <TextInput
+              placeholder="0.00 kg"
+              style={styles.input}
+              maxLength={5}
+              value={input.weight}
+              onChangeText={(name: string) => {
+                if (Number(name) > 180) name = "220.0";
+
+                setInput({ ...input, weight: name });
+              }}
+              keyboardType="number-pad"
+            ></TextInput>
+
+            {input?.weight != "" && Number(input?.weight) > 30 && (
+              <View
+                style={{ height: 50, marginTop: -50, alignItems: "flex-end" }}
+              >
+                <Icon name="check-circle" size={22} color="#4EBFB4" />
+              </View>
+            )}
+
+            <TextInput
+              placeholder="190 cm"
+              style={styles.input}
+              maxLength={3}
+              value={input.height}
+              onChangeText={(name: string) => {
+                if (Number(name) > 220) name = "220";
+
+                setInput({ ...input, height: name });
+              }}
+              keyboardType="number-pad"
+            ></TextInput>
+
+            {input?.height != "" && (
+              <View
+                style={{ height: 50, marginTop: -50, alignItems: "flex-end" }}
+              >
+                <Icon name="check-circle" size={22} color="#4EBFB4" />
+              </View>
+            )}
+          </View>
+
+          <View style={styles.footer}>
+            <RectButton style={styles.button} onPress={goNext} enabled={check}>
+              <Text style={styles.buttonText}>Avançar</Text>
+            </RectButton>
+          </View>
         </KeyboardAvoidingView>
       </View>
     </>

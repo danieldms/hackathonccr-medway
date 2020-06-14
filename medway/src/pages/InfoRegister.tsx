@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  View,
-  StyleSheet,
-  Text,
-  Picker
-} from "react-native";
+import { View, StyleSheet, Text, Picker } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import {
   TouchableOpacity,
@@ -33,7 +28,7 @@ const InfoRegister = () => {
   const route = useRoute();
   let params: Props | undefined = route.params;
 
-  const [input, setInput] = useState<Dados>();
+  const [input, setInput] = useState<Dados>({name: '', gender: ''});
   const [check, setCheck] = useState(false);
 
   const goNext = () => {
@@ -95,6 +90,14 @@ const InfoRegister = () => {
             id="name"
             onChangeText={handlerOnChangeInput}
           ></TextInput>
+
+          {input?.name != '' && (
+            <View
+              style={{ height: 50, marginTop: -50, alignItems: "flex-end" }}
+            >
+              <Icon name="check-circle" size={22} color="#4EBFB4" />
+            </View>
+          )}
 
           <View style={{ borderBottomColor: "#092E63", borderBottomWidth: 1 }}>
             <Picker

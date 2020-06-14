@@ -16,7 +16,6 @@ interface Props {
 }
 
 const Dashboard = () => {
-  
   const route = useRoute();
   let params: Props | undefined = route.params;
 
