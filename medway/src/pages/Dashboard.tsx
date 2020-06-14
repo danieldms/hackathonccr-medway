@@ -31,7 +31,7 @@ const Dashboard = () => {
             flexDirection: "row",
             justifyContent: "space-between",
             marginBottom: 8,
-            paddingHorizontal: 0
+            paddingHorizontal: 0,
           }}
         >
           <View style={styles.contentContainer}>
@@ -63,7 +63,6 @@ const Dashboard = () => {
             <Text style={styles.text}>Média: 091</Text>
             <Text style={styles.text}>Máxima: 120</Text>
           </View>
-
         </View>
 
         <View
@@ -75,7 +74,9 @@ const Dashboard = () => {
         >
           <View style={styles.contentContainer}>
             <View style={styles.contentTitle}>
-              <Text style={styles.title}>132/<Text style={{fontSize: 22}}>84</Text></Text>
+              <Text style={styles.title}>
+                132/<Text style={{ fontSize: 22 }}>84</Text>
+              </Text>
               <Image
                 source={require("../assets/doctor.png")}
                 width={22}
@@ -98,10 +99,11 @@ const Dashboard = () => {
               />
             </View>
             <Text style={styles.description}>{`Medição \n de oxigênio`}</Text>
-            <Text style={{...styles.text, fontSize: 22, fontWeight: "bold"}}>95 %</Text>
+            <Text style={{ ...styles.text, fontSize: 22, fontWeight: "bold" }}>
+              95 %
+            </Text>
             <Text style={styles.text}>Média de oxigênio</Text>
           </View>
-
         </View>
       </View>
     </>
@@ -113,7 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: Constants.statusBarHeight - 15,
     paddingVertical: Constants.statusBarHeight - 20,
-    backgroundColor: "#F6F5F5"
+    backgroundColor: "#F6F5F5",
   },
   alertContainer: {
     backgroundColor: "#1D3273",
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     flexDirection: "column",
     padding: Constants.statusBarHeight - 10,
-    marginBottom: 8
+    marginBottom: 8,
   },
   alertTitle: {
     color: "white",
@@ -135,7 +137,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     minWidth: "48%",
     backgroundColor: "#fff",
-    borderRadius: 8
+    borderRadius: 8,
   },
   contentTitle: {
     flexDirection: "row",

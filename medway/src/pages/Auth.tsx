@@ -15,12 +15,12 @@ const Auth = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    if(modalVisible == true) {
-      setTimeout(()=> {
-        navigation.navigate('InfoRegister');
+    if (modalVisible == true) {
+      setTimeout(() => {
+        navigation.navigate("InfoRegister");
 
         setModalVisible(false);
-      }, 3000)
+      }, 3000);
     }
   }, [modalVisible]);
 
@@ -30,9 +30,9 @@ const Auth = () => {
     <>
       <Modal animationType="slide" transparent={false} visible={modalVisible}>
         <View style={styles.modalContainer}>
-						<Icon name="check-circle" size={172} color="#FFF" />
-						<Text style={styles.modalTitle}>Sucesso</Text>
-						<Text style={styles.modalDescription}>Telefone autenticado.</Text>
+          <Icon name="check-circle" size={172} color="#FFF" />
+          <Text style={styles.modalTitle}>Sucesso</Text>
+          <Text style={styles.modalDescription}>Telefone autenticado.</Text>
         </View>
       </Modal>
 
@@ -100,24 +100,24 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 32,
     paddingTop: 20 + Constants.statusBarHeight,
-	},
-	modalContainer: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
+  },
+  modalContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
     flexDirection: "column",
-		backgroundColor: "#1D3273",
-	},
-	modalTitle: {
-		fontSize: 32,
-		fontWeight: "bold",
-		color: "#fff",
-		marginBottom: 8,
-		marginTop: 32
-	},
-	modalDescription: {
-		color: "#fff"
-	},
+    backgroundColor: "#1D3273",
+  },
+  modalTitle: {
+    fontSize: 32,
+    fontWeight: "bold",
+    color: "#fff",
+    marginBottom: 8,
+    marginTop: 32,
+  },
+  modalDescription: {
+    color: "#fff",
+  },
   contentTitle: {
     flexDirection: "column",
     alignItems: "center",

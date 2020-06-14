@@ -21,12 +21,12 @@ const InfoDateRegister = () => {
   }, []);
 
   useEffect(() => {
-    if(modalVisible == true) {
-      setTimeout(()=> {
-        navigation.navigate('Dashboard');
+    if (modalVisible == true) {
+      setTimeout(() => {
+        navigation.navigate("Dashboard");
 
         setModalVisible(false);
-      }, 3000)
+      }, 3000);
     }
   }, [modalVisible]);
 
