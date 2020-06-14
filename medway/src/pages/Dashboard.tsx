@@ -40,6 +40,7 @@ const Dashboard = () => {
 
   function Dashboard() {
     return (
+      <View style={{flex:1, backgroundColor: "#1D3273", paddingBottom: 8}}>
       <View style={styles.container}>
         <View style={styles.alertContainer}>
           <View
@@ -138,6 +139,7 @@ const Dashboard = () => {
           </RectButton>
         </View>
       </View>
+      </View>
     );
   }
 
@@ -153,7 +155,9 @@ const Dashboard = () => {
     <Tab.Navigator
       initialRouteName="Dashboard"
       tabBarOptions={{
-        activeTintColor: "#e91e63",
+        style:{backgroundColor: "#1D3273", borderTopColor: '#1D3273'},
+        activeTintColor: "#FFF",
+        inactiveTintColor: "#FFF",
       }}
     >
       <Tab.Screen
@@ -208,8 +212,10 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: Constants.statusBarHeight - 15,
     paddingTop: Constants.statusBarHeight + 20,
-    paddingBottom: 8,
+    paddingBottom: 16,
     backgroundColor: "#F6F5F5",
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
   },
   alertContainer: {
     backgroundColor: "#1D3273",
@@ -238,7 +244,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     justifyContent: "space-between",
     marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 0,
   },
   title: {
     color: "#092E63",
@@ -254,7 +260,7 @@ const styles = StyleSheet.create({
     color: "#4EBFB4",
   },
   footer: {
-    marginTop: 32,
+    marginTop: 16,
   },
   button: {
     backgroundColor: "#27AC38",
