@@ -2,8 +2,24 @@ import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import Constants from "expo-constants";
+import { useRoute } from "@react-navigation/native";
+
+interface Props {
+  prefix?: string;
+  phone?: string;
+  code?: number[];
+  name?: string;
+  gender?: string;
+  weight?: string;
+  height?: string;
+  date?: string;
+}
 
 const Dashboard = () => {
+  
+  const route = useRoute();
+  let params: Props | undefined = route.params;
+
   return (
     <>
       <View style={styles.container}>

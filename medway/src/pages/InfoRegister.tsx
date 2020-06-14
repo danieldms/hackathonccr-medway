@@ -1,5 +1,10 @@
-import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Picker
+} from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import {
   TouchableOpacity,
@@ -7,13 +12,55 @@ import {
   RectButton,
 } from "react-native-gesture-handler";
 import Constants from "expo-constants";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+
+interface Dados {
+  name?: string;
+  gender?: string;
+}
+
+interface Props {
+  prefix?: string;
+  phone?: string;
+  code?: number[];
+  name?: string;
+  gender?: string;
+}
 
 const InfoRegister = () => {
   const navigation = useNavigation();
 
+  const route = useRoute();
+  let params: Props | undefined = route.params;
+
+  const [input, setInput] = useState<Dados>();
+  const [check, setCheck] = useState(false);
+
   const goNext = () => {
-    navigation.navigate("InfoComplementaryRegister");
+    if (params != undefined) {
+      params.name = input?.name;
+      params.gender = input?.gender;
+    }
+
+    navigation.navigate("InfoComplementaryRegister", params);
+  };
+
+  useEffect(() => {
+    setCheck((input?.name != "" && input?.gender != "") || false);
+  }, [input]);
+
+  const handlerOnChangeInput = (name: string) => {
+    setInput({ ...input, name: name });
+  };
+
+  const handlerOnchange = (name: string) => {
+    setInput({ ...input, gender: name });
+
+    if (Number(name?.length) >= 11) {
+      setCheck(true);
+    } else {
+      setCheck(false);
+    }
   };
 
   return (
@@ -32,7 +79,7 @@ const InfoRegister = () => {
             <Text style={styles.title}>Cadastro</Text>
             <Text style={styles.description}>Dados pessoais</Text>
           </View>
-          
+
           <View>
             <Text style={styles.title}>
               1/<Text style={{ fontSize: 24, fontWeight: "300" }}>3</Text>
@@ -45,12 +92,26 @@ const InfoRegister = () => {
           <TextInput
             placeholder="Nome Completo"
             style={styles.input}
+            id="name"
+            onChangeText={handlerOnChangeInput}
           ></TextInput>
-          <TextInput placeholder="Sexo" style={styles.input}></TextInput>
+
+          <View style={{ borderBottomColor: "#092E63", borderBottomWidth: 1 }}>
+            <Picker
+              selectedValue={input?.gender}
+              style={{ color: "#092E63" }}
+              onValueChange={handlerOnchange}
+            >
+              <Picker.Item label="Gênero" value="" />
+              <Picker.Item label="Masculino" value="masculino" />
+              <Picker.Item label="Feminino" value="feminino" />
+              <Picker.Item label="Prefiro não dizer" value="não dizer" />
+            </Picker>
+          </View>
         </View>
 
         <View style={styles.footer}>
-          <RectButton style={styles.button} onPress={goNext}>
+          <RectButton style={styles.button} onPress={goNext} enabled={check}>
             <Text style={styles.buttonText}>Avançar</Text>
           </RectButton>
         </View>

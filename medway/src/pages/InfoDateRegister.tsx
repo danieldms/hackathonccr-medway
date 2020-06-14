@@ -3,9 +3,20 @@ import { View, StyleSheet, Text, Platform, Modal } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import { TouchableOpacity, RectButton } from "react-native-gesture-handler";
 import Constants from "expo-constants";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import Moment from "moment";
+
+interface Props {
+  prefix?: string;
+  phone?: string;
+  code?: number[];
+  name?: string;
+  gender?: string;
+  weight?: string;
+  height?: string;
+  date?: string;
+}
 
 const InfoDateRegister = () => {
   const navigation = useNavigation();
@@ -16,6 +27,9 @@ const InfoDateRegister = () => {
   const [show, setShow] = useState(false);
   const [input, setInput] = useState("");
 
+  const route = useRoute();
+  let params: Props | undefined = route.params;
+
   useEffect(() => {
     setInput("00/00/0000");
   }, []);
@@ -23,7 +37,11 @@ const InfoDateRegister = () => {
   useEffect(() => {
     if (modalVisible == true) {
       setTimeout(() => {
-        navigation.navigate("Dashboard");
+        if (params != undefined) {
+          params.date = input;
+        }
+
+        navigation.navigate("Dashboard", params);
 
         setModalVisible(false);
       }, 3000);

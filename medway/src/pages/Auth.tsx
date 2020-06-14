@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Modal } from "react-native";
+import { View, StyleSheet, Text, Modal, ActivityIndicator } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import {
   TouchableOpacity,
@@ -8,26 +8,88 @@ import {
   TouchableHighlight,
 } from "react-native-gesture-handler";
 import Constants from "expo-constants";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+
+interface Props {
+  prefix?: string;
+  phone?: string;
+  code?: number[];
+}
 
 const Auth = () => {
   const navigation = useNavigation();
+
+  const route = useRoute();
+  let params: Props | undefined = route.params;
+
   const [modalVisible, setModalVisible] = useState(false);
+  const [numbers, setNumbers] = useState<number[]>([0, 0, 0, 0]);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     if (modalVisible == true) {
       setTimeout(() => {
-        navigation.navigate("InfoRegister");
+        if (params != undefined) params.code = numbers;
+
+        navigation.navigate("InfoRegister", params);
 
         setModalVisible(false);
       }, 3000);
     }
   }, [modalVisible]);
 
-  const reSendCode = () => {};
+  useEffect(() => {
+    reSendCode();
+  }, []);
+
+  const reSendCode = () => {
+    setLoading(true);
+    setTimeout(() => {
+      let random = [
+        Math.floor(Math.random() * 100) + 1,
+        Math.floor(Math.random() * 100) + 1,
+        Math.floor(Math.random() * 100) + 1,
+        Math.floor(Math.random() * 100) + 1,
+      ];
+      setNumbers(random);
+      setLoading(false);
+    }, 2000);
+  };
 
   return (
     <>
+      {isLoading && (
+        <Modal animationType="none" transparent={true} visible={isLoading}>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 20,
+              flex: 1,
+              backgroundColor: "#00000090",
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: "#fff",
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: 20,
+                flexDirection: "row",
+              }}
+            >
+              <ActivityIndicator
+                size="large"
+                color="#0000ff"
+                style={{ marginRight: 20 }}
+              />
+              <Text>Recebendo código...</Text>
+            </View>
+          </View>
+        </Modal>
+      )}
+
       <Modal animationType="slide" transparent={false} visible={modalVisible}>
         <View style={styles.modalContainer}>
           <Icon name="check-circle" size={172} color="#FFF" />
@@ -49,7 +111,10 @@ const Auth = () => {
           <Text style={styles.title}>Autenticação</Text>
           <Text style={styles.description}>Digite o código enviado</Text>
           <Text>
-            para <Text style={{ fontWeight: "bold" }}>+55 (83) 98765-2333</Text>
+            para{" "}
+            <Text style={{ fontWeight: "bold" }}>
+              {`+${params?.prefix}`} {`${params?.phone}`}
+            </Text>
           </Text>
         </View>
 
@@ -58,21 +123,25 @@ const Auth = () => {
             style={styles.input}
             keyboardType="number-pad"
             maxLength={1}
+            value={String(numbers[0]) || ""}
           ></TextInput>
           <TextInput
             style={styles.input}
             keyboardType="number-pad"
             maxLength={1}
+            value={String(numbers[1]) || ""}
           ></TextInput>
           <TextInput
             style={styles.input}
             keyboardType="number-pad"
             maxLength={1}
+            value={String(numbers[2]) || ""}
           ></TextInput>
           <TextInput
             style={styles.input}
             keyboardType="number-pad"
             maxLength={1}
+            value={String(numbers[3]) || ""}
           ></TextInput>
         </View>
 

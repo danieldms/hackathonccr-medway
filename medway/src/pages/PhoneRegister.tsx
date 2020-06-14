@@ -1,19 +1,36 @@
-import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import React, { useState, useEffect, FormEvent } from "react";
+import { View, StyleSheet, Text, Picker } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
-import {
-  TouchableOpacity,
-  TextInput,
-  RectButton,
-} from "react-native-gesture-handler";
+import { TouchableOpacity, RectButton, TextInput } from "react-native-gesture-handler";
 import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/native";
+
+interface Phone {
+  prefix?: string;
+  phone?: string;
+}
 
 const PhoneRegister = () => {
   const navigation = useNavigation();
 
+  const [phone, setPhone] = useState<Phone>({ prefix: "55" });
+  const [check, setCheck] = useState(false);
+
+  const handlerPrefixChange = (name: string) => {
+    setPhone({ ...phone, prefix: name });
+  };
+
+  const handlerNameChange = (name: string) => {
+    setPhone({ ...phone, phone: name });
+    if (Number(name?.length) >= 11) {
+      setCheck(true);
+    } else {
+      setCheck(false);
+    }
+  };
+
   const goNext = () => {
-    navigation.navigate("Auth");
+    navigation.navigate("Auth", phone);
   };
 
   return (
@@ -35,20 +52,38 @@ const PhoneRegister = () => {
         </View>
 
         <View style={styles.phoneContainer}>
-          <TextInput
-            placeholder="+55"
+          <View
             style={{
-              width: 50,
-              borderBottomWidth: 1,
               borderBottomColor: "#092E63",
-              marginRight: 20,
+              borderBottomWidth: 1,
+              marginRight: 10,
             }}
+          >
+            <Picker
+              selectedValue={phone.prefix}
+              style={{ width: 100, color: "#092E63" }}
+              onValueChange={handlerPrefixChange}
+            >
+              <Picker.Item label="+55" value="+55" />
+            </Picker>
+          </View>
+          <TextInput
+            placeholder="Seu número"
+            value={phone.phone}
+            maxLength={11}
+            onChangeText={handlerNameChange}
+            style={styles.input}
+            keyboardType="number-pad"
           ></TextInput>
-          <TextInput placeholder="Seu número" style={styles.input}></TextInput>
         </View>
 
+        {check && (
+          <View style={{ height: 40, marginTop: -40, alignItems: "flex-end" }}>
+            <Icon name="check-circle" size={22} color="#4EBFB4" />
+          </View>
+        )}
         <View style={styles.footer}>
-          <RectButton style={styles.button} onPress={goNext}>
+          <RectButton style={styles.button} onPress={goNext} enabled={check}>
             <Text style={styles.buttonText}>Confirmar</Text>
           </RectButton>
         </View>
