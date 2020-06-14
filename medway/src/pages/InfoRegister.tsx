@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Picker } from "react-native";
+import { View, StyleSheet, Text, Picker, StatusBar } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import {
   TouchableOpacity,
@@ -8,6 +8,7 @@ import {
 } from "react-native-gesture-handler";
 import Constants from "expo-constants";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 interface Dados {
   name?: string;
@@ -59,7 +60,12 @@ const InfoRegister = () => {
   };
 
   return (
-    <>
+    <KeyboardAwareScrollView>
+      <StatusBar
+        translucent
+        barStyle="dark-content"
+        backgroundColor="transparent"
+      />
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => {
@@ -87,7 +93,6 @@ const InfoRegister = () => {
           <TextInput
             placeholder="Nome Completo"
             style={styles.input}
-            id="name"
             onChangeText={handlerOnChangeInput}
           ></TextInput>
 
@@ -119,7 +124,7 @@ const InfoRegister = () => {
           </RectButton>
         </View>
       </View>
-    </>
+    </KeyboardAwareScrollView>
   );
 };
 

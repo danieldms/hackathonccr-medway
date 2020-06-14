@@ -8,6 +8,7 @@ import {
 } from "react-native-gesture-handler";
 import Constants from "expo-constants";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 interface Props {
   prefix?: string;
@@ -47,7 +48,7 @@ const InfoComplementaryRegister = () => {
   }, [input]);
 
   return (
-    <>
+    <KeyboardAwareScrollView>
       <View style={styles.container}>
         <TouchableOpacity
           onPress={() => {
@@ -71,59 +72,57 @@ const InfoComplementaryRegister = () => {
           </View>
         </View>
 
-        <KeyboardAvoidingView>
-          <View style={styles.fieldsContainer}>
-            <TextInput
-              placeholder="0.00 kg"
-              style={styles.input}
-              maxLength={5}
-              value={input.weight}
-              onChangeText={(name: string) => {
-                if (Number(name) > 180) name = "220";
+        <View style={styles.fieldsContainer}>
+          <TextInput
+            placeholder="0.00 kg"
+            style={styles.input}
+            maxLength={5}
+            value={input.weight}
+            onChangeText={(name: string) => {
+              if (Number(name) > 180) name = "220";
 
-                setInput({ ...input, weight: name });
-              }}
-              keyboardType="number-pad"
-            ></TextInput>
+              setInput({ ...input, weight: name });
+            }}
+            keyboardType="number-pad"
+          ></TextInput>
 
-            {input?.weight != "" && Number(input?.weight) > 30 && (
-              <View
-                style={{ height: 50, marginTop: -50, alignItems: "flex-end" }}
-              >
-                <Icon name="check-circle" size={22} color="#4EBFB4" />
-              </View>
-            )}
+          {input?.weight != "" && Number(input?.weight) > 30 && (
+            <View
+              style={{ height: 50, marginTop: -50, alignItems: "flex-end" }}
+            >
+              <Icon name="check-circle" size={22} color="#4EBFB4" />
+            </View>
+          )}
 
-            <TextInput
-              placeholder="190 cm"
-              style={styles.input}
-              maxLength={3}
-              value={input.height}
-              onChangeText={(name: string) => {
-                if (Number(name) > 220) name = "220";
+          <TextInput
+            placeholder="190 cm"
+            style={styles.input}
+            maxLength={3}
+            value={input.height}
+            onChangeText={(name: string) => {
+              if (Number(name) > 220) name = "220";
 
-                setInput({ ...input, height: name });
-              }}
-              keyboardType="number-pad"
-            ></TextInput>
+              setInput({ ...input, height: name });
+            }}
+            keyboardType="number-pad"
+          ></TextInput>
 
-            {input?.height != "" && (
-              <View
-                style={{ height: 50, marginTop: -50, alignItems: "flex-end" }}
-              >
-                <Icon name="check-circle" size={22} color="#4EBFB4" />
-              </View>
-            )}
-          </View>
+          {input?.height != "" && (
+            <View
+              style={{ height: 50, marginTop: -50, alignItems: "flex-end" }}
+            >
+              <Icon name="check-circle" size={22} color="#4EBFB4" />
+            </View>
+          )}
+        </View>
 
-          <View style={styles.footer}>
-            <RectButton style={styles.button} onPress={goNext} enabled={check}>
-              <Text style={styles.buttonText}>Avançar</Text>
-            </RectButton>
-          </View>
-        </KeyboardAvoidingView>
+        <View style={styles.footer}>
+          <RectButton style={styles.button} onPress={goNext} enabled={check}>
+            <Text style={styles.buttonText}>Avançar</Text>
+          </RectButton>
+        </View>
       </View>
-    </>
+    </KeyboardAwareScrollView>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Text, Picker, StatusBar } from "react-native";
 import { Feather as Icon } from "@expo/vector-icons";
 import {
@@ -8,6 +8,7 @@ import {
 } from "react-native-gesture-handler";
 import Constants from "expo-constants";
 import { useNavigation } from "@react-navigation/native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 interface Phone {
   prefix?: string;
@@ -38,7 +39,7 @@ const PhoneRegister = () => {
   };
 
   return (
-    <>
+    <KeyboardAwareScrollView>
       <StatusBar
         translucent
         barStyle="dark-content"
@@ -97,7 +98,7 @@ const PhoneRegister = () => {
           </RectButton>
         </View>
       </View>
-    </>
+    </KeyboardAwareScrollView>
   );
 };
 
