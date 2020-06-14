@@ -1,8 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
-import { Feather as Icon } from "@expo/vector-icons";
+import { View, Text, StyleSheet, Image, Linking } from "react-native";
+import {
+  FontAwesome as Icon,
+  Feather as IconFeather,
+} from "@expo/vector-icons";
 import Constants from "expo-constants";
 import { useRoute } from "@react-navigation/native";
+import { RectButton } from "react-native-gesture-handler";
 
 interface Props {
   prefix?: string;
@@ -19,6 +23,18 @@ const Dashboard = () => {
   const route = useRoute();
   let params: Props | undefined = route.params;
 
+  const openWhatsapp = () => {
+    let url =
+      "whatsapp://send?text=Olá, gostaria de marcar uma consulta&phone=+551149331985";
+    Linking.openURL(url)
+      .then((data) => {
+        console.log("WhatsApp Opened");
+      })
+      .catch(() => {
+        alert("Make sure Whatsapp installed on your device");
+      });
+  };
+
   return (
     <>
       <View style={styles.container}>
@@ -33,7 +49,7 @@ const Dashboard = () => {
             <Text style={styles.alertTitle}>
               <Icon name="bell" size={32} /> Alertas
             </Text>
-            <Icon name="smile" color="#fff" size={40} />
+            <IconFeather name="smile" color="#fff" size={40} />
           </View>
           <Text style={styles.alertDescription}>
             Verifcamos que está passando por problemas.
@@ -59,9 +75,7 @@ const Dashboard = () => {
               />
             </View>
             <Text style={styles.description}>{`Frequência \n cardíaca`}</Text>
-            <Text style={styles.text}>Mínimo: 080</Text>
-            <Text style={styles.text}>Média: 091</Text>
-            <Text style={styles.text}>Máxima: 091</Text>
+            <Text style={styles.text}>Ver histórico</Text>
           </View>
 
           <View style={styles.contentContainer}>
@@ -74,9 +88,7 @@ const Dashboard = () => {
               />
             </View>
             <Text style={styles.description}>{`Qualide \n de sono`}</Text>
-            <Text style={styles.text}>Mínimo: 080</Text>
-            <Text style={styles.text}>Média: 091</Text>
-            <Text style={styles.text}>Máxima: 120</Text>
+            <Text style={styles.text}>Ver histórico</Text>
           </View>
         </View>
 
@@ -98,10 +110,8 @@ const Dashboard = () => {
                 height={22}
               />
             </View>
-            <Text style={styles.description}>{`Pressão arterial`}</Text>
-            <Text style={styles.text}>Mínimo: 90/60</Text>
-            <Text style={styles.text}>Média: 120/80</Text>
-            <Text style={styles.text}>Máxima: 135/82</Text>
+            <Text style={styles.description}>{`Pressão \narterial`}</Text>
+            <Text style={styles.text}>Ver histórico</Text>
           </View>
 
           <View style={styles.contentContainer}>
@@ -114,11 +124,15 @@ const Dashboard = () => {
               />
             </View>
             <Text style={styles.description}>{`Medição \n de oxigênio`}</Text>
-            <Text style={{ ...styles.text, fontSize: 22, fontWeight: "bold" }}>
-              95 %
-            </Text>
-            <Text style={styles.text}>Média de oxigênio</Text>
+            <Text style={styles.text}>Ver histórico</Text>
           </View>
+        </View>
+
+        <View style={styles.footer}>
+          <RectButton style={styles.button} onPress={openWhatsapp}>
+            <Icon name="whatsapp" size={32} color="#fff" />
+            <Text style={styles.buttonText}>AGENDAR CONSULTA</Text>
+          </RectButton>
         </View>
       </View>
     </>
@@ -134,7 +148,7 @@ const styles = StyleSheet.create({
   },
   alertContainer: {
     backgroundColor: "#1D3273",
-    height: 160,
+    height: 130,
     borderRadius: 20,
     flexDirection: "column",
     padding: Constants.statusBarHeight - 10,
@@ -172,7 +186,27 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   text: {
-    color: "#787C89",
+    color: "#4EBFB4",
+  },
+  footer: {
+    marginTop: 32,
+  },
+  button: {
+    backgroundColor: "#27AC38",
+    height: 60,
+    flexDirection: "row",
+    borderRadius: 10,
+    overflow: "hidden",
+    alignItems: "center",
+    marginTop: 8,
+    justifyContent: "center",
+  },
+  buttonText: {
+    textAlign: "center",
+    marginLeft: 20,
+    color: "#FFF",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
 

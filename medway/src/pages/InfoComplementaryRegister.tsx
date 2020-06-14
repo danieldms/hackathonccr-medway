@@ -79,7 +79,7 @@ const InfoComplementaryRegister = () => {
               maxLength={5}
               value={input.weight}
               onChangeText={(name: string) => {
-                if (Number(name) > 180) name = "220.0";
+                if (Number(name) > 180) name = "220";
 
                 setInput({ ...input, weight: name });
               }}
